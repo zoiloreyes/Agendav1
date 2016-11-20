@@ -5,6 +5,7 @@
  */
 package Agenda;
 
+import java.awt.BorderLayout;
 import javax.swing.JLabel;
 
 /**
@@ -14,13 +15,46 @@ import javax.swing.JLabel;
 public class Contacto extends javax.swing.JPanel {
     private JLabel imglbl;
     private Imagen imgclass;
+    private String nombre;
+    private String apellido;
+    private String lugar;
+    private String telefono;
+    private String correo;
+    private String url;
+    private int id_contacto;
+    private JLabel img1;
     /**
      * Creates new form Contacto
      */
-    public Contacto(String url ) {
-        initComponents();
+    public Contacto(String nombre, String apellido, String lugar, String telefono,String correo, String url, int id_contacto) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.lugar = lugar;
+        this.telefono = telefono;
+        this.correo = correo;
+        this.url = url;
+        this.id_contacto = id_contacto;
+        
+        //lblApellido.setText(apellido);
+        //lblNombre.setText(nombre);
+        //lblImagen = imgclass.getRoundImage(imagen, 50, 50, 10);
+        if(telefono != null){
+            String output = String.format("(%s) %s-%s", telefono.substring(0,3),
+                    telefono.substring(3,6),telefono.substring(6,10));
+            this.telefono = output;
+ 
+        
+        }
         imgclass = new Imagen();
-        imgclass.getRoundImage(url,50,50,10);
+        img1 = imgclass.getRoundImage(url, 50, 50, 6);
+        initComponents();
+        
+        
+     
+        
+        
+        //imgclass = new Imagen();
+        //imgclass.getRoundImage(imagen,50,50,10);
         
     }
 
@@ -32,24 +66,51 @@ public class Contacto extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
+        lblNombre = new javax.swing.JLabel();
+        lblTelefono = new javax.swing.JLabel();
+        lblImagen = new javax.swing.JLabel();
+
+        setBackground(new java.awt.Color(255, 255, 255));
+        setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 204, 255), 1, true));
         setMaximumSize(new java.awt.Dimension(100, 50));
         setMinimumSize(new java.awt.Dimension(100, 50));
         setPreferredSize(new java.awt.Dimension(100, 50));
+        setLayout(new java.awt.GridBagLayout());
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        lblNombre.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        lblNombre.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblNombre.setText(this.nombre + " " + this.apellido);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        add(lblNombre, gridBagConstraints);
+
+        lblTelefono.setFont(new java.awt.Font("Dialog", 0, 8)); // NOI18N
+        lblTelefono.setForeground(new java.awt.Color(153, 153, 153));
+        lblTelefono.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblTelefono.setText(this.telefono);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        add(lblTelefono, gridBagConstraints);
+
+        lblImagen.setText("jLabel1");
+        lblImagen = this.img1;
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 3;
+        add(lblImagen, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel lblImagen;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblTelefono;
     // End of variables declaration//GEN-END:variables
 }

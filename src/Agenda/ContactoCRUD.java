@@ -16,16 +16,16 @@ import java.sql.Statement;
  */
 public class ContactoCRUD {
     private Connection conn;
-    public void insertContacto(String nombre, String apellido, String lugar, int telefono,String correo, String imagen){
+    public void insertContacto(String nombre, String apellido, String lugar, String telefono,String correo, String imagen){
         try{
         conn = Driver.getConnection();
-        String sql = "INSERT INTO contacto(nombre, apellido, lugar_trabajo, telefono, correo, imagen) VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO contacto(nombre, apellido, lugar_trabajo, telefono, correo, imagen) VALUES(?,?,?,?,?,?)";
         
         PreparedStatement prst = conn.prepareStatement(sql);
         prst.setString(1, nombre);
         prst.setString(2, apellido);
         prst.setString(3, lugar);
-        prst.setInt(4, telefono);
+        prst.setString(4, telefono);
         prst.setString(5, correo);
         prst.setString(6, imagen);
         
@@ -35,11 +35,12 @@ public class ContactoCRUD {
         }
     }
     
-    public ResultSet getContactoMin(){
+    public ResultSet getSpecContacto(int id_contacto){
         try{
         conn = Driver.getConnection();
-        String sql = "Select id_contacto, imagen, nombre, apellido, telefono FROM contacto";
-        Statement stm = conn.createStatement();
+        String sql = "Select * FROM contacto WHERE id_contacto=?";
+        PreparedStatement stm = conn.prepareStatement(sql);
+        stm.setInt(1, id_contacto);
         ResultSet result = stm.executeQuery(sql);
             return result;
         }catch(Exception e){
@@ -48,7 +49,7 @@ public class ContactoCRUD {
         return null;
     }
     
-    public ResultSet getContactoFull(int id){
+    public ResultSet getContactoFull(){
         try{
         conn = Driver.getConnection();
         String sql = "Select * FROM contacto";
@@ -61,7 +62,7 @@ public class ContactoCRUD {
         return null;
     }
     
-    public void updateContacto(String nombre, String apellido, String lugar, int telefono,String correo, String imagen, int id_contacto){
+    public void updateContacto(String nombre, String apellido, String lugar, String telefono,String correo, String imagen, int id_contacto){
         try{
         conn = Driver.getConnection();
         String sql = "UPDATE contacto SET nombre=?, apellido=?, lugar_trabajo=?, telefono=?, correo=?, imagen=? where id_contacto=?";
@@ -70,7 +71,7 @@ public class ContactoCRUD {
         prst.setString(1, nombre);
         prst.setString(2, apellido);
         prst.setString(3, lugar);
-        prst.setInt(4, telefono);
+        prst.setString(4, telefono);
         prst.setString(5, correo);
         prst.setString(5, imagen);
         prst.setInt(6, id_contacto);
