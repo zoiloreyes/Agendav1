@@ -14,7 +14,7 @@ public class Driver {
         try{
             getConnection();
         }catch(Exception e){
-            System.out.println("Exploto");
+            System.out.println(e.getMessage());
         }
     }
     
