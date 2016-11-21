@@ -21,31 +21,58 @@ public class Agenda extends javax.swing.JFrame {
     ContactoCRUD cc;
     ResultSet res;
     ListaContacto ls;
+    JScrollPane sp;
     
     /**
      * Creates new form Agenda
      */
     public Agenda() {
-        prepareList();
+        prepareFullList();
         initComponents();
         prepareAgenda();
         
     }
     private void prepareAgenda(){
         setLayout(new BorderLayout());
-        JScrollPane sp = new JScrollPane(ls);
+        sp = new JScrollPane(ls);
         add(sp, BorderLayout.CENTER);
-        add(new SearchBar(), BorderLayout.NORTH);
+        add(new SearchBar(this), BorderLayout.NORTH);
         setVisible(true);
     }
     
     public void updateFrame(){
-        prepareList();
+        prepareFullList();
         getContentPane().removeAll();
         prepareAgenda();
         revalidate();
     }
-    private void prepareList(){
+    
+    public void prepareFilteredList(ResultSet res){
+        try{ls = new ListaContacto();
+            while(res.next()){
+                int id_contacto = res.getInt(1);
+                       String nombre = res.getString(2);
+                       String apellido = res.getString(3);
+                       String lugar = res.getString(4);
+                       String telefono = res.getString(5);
+                       String correo = res.getString(6);
+                       String imagen = res.getString(7);
+
+
+                       Contacto c = new Contacto(nombre, apellido, lugar, telefono, correo, imagen, id_contacto,this);
+                       ls.addContacto(c);
+            }
+            getContentPane().remove(sp);
+            JScrollPane sp = new JScrollPane(ls);
+            add(sp, BorderLayout.CENTER);
+            revalidate();
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        
+    }
+    
+    private void prepareFullList(){
         try{
                cc = new ContactoCRUD();
                res = cc.getContactoFull();

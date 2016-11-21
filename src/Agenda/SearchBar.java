@@ -5,6 +5,7 @@
  */
 package Agenda;
 
+import java.sql.ResultSet;
 import javax.swing.JComboBox;
 
 /**
@@ -15,10 +16,13 @@ public class SearchBar extends javax.swing.JPanel {
     private ContactoCRUD cc;
     private String[] columnNames;
     Imagen imgclass;
+    Agenda mother;
+    ResultSet res;
     /**
      * Creates new form SearchBar
      */
-    public SearchBar() {
+    public SearchBar(Agenda mother) {
+        this.mother = mother;
         initComponents();
     }
     
@@ -45,11 +49,25 @@ public class SearchBar extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.GridBagLayout());
 
-        jTextField1.setText("jTextField1");
+        jTextField1.setForeground(new java.awt.Color(153, 153, 153));
+        jTextField1.setText("Escribe un patrón de búsqueda");
         jTextField1.setBorder(null);
+        jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField1FocusLost(evt);
+            }
+        });
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
+            }
+        });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField1KeyPressed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -93,8 +111,30 @@ public class SearchBar extends javax.swing.JPanel {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
+      
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+        if(evt.getKeyCode() == evt.VK_ENTER)
+            {
+                  cc = new ContactoCRUD();
+                  String pattern = jTextField1.getText();
+                  res = cc.getSearchedPattern(jComboBox1.getSelectedItem().toString(),pattern);
+                  mother.prepareFilteredList(res);
+            }
+        else if(evt.getKeyCode() == evt.VK_ESCAPE){
+            mother.updateFrame();
+        }
+    }//GEN-LAST:event_jTextField1KeyPressed
+
+    private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
+        mother.updateFrame();
+    }//GEN-LAST:event_jTextField1FocusLost
+
+    private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
+        jTextField1.setText("");
+        jTextField1.setForeground(new java.awt.Color(0, 0, 0));
+    }//GEN-LAST:event_jTextField1FocusGained
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

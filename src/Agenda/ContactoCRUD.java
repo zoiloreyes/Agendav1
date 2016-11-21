@@ -60,11 +60,26 @@ public class ContactoCRUD {
         
         return null;
     }
-    
+    public ResultSet getSearchedPattern(String name, String pattern){
+        try{
+        conn = Driver.getConnection();
+        
+        String sql = "Select * FROM contacto WHERE "+ name + " LIKE ?";
+        PreparedStatement stm = conn.prepareStatement(sql);
+        stm.setString(1, "%"+pattern+"%");
+        System.out.println(stm);
+        ResultSet result = stm.executeQuery();
+            return result;
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+        
+    }
     public ResultSet getContactoFull(){
         try{
         conn = Driver.getConnection();
-        String sql = "Select * FROM contacto";
+        String sql = "Select * FROM contacto ORDER BY nombre";
         Statement stm = conn.createStatement();
         ResultSet result = stm.executeQuery(sql);
             return result;
@@ -122,7 +137,7 @@ public class ContactoCRUD {
                 while(rs.next()){
                     columns.add(rs.getString("COLUMN_NAME"));
                 }
-                
+                columns.remove(0);
                 String[] result = columns.toArray(new String[columns.size()]);
                 return result;
             }

@@ -82,9 +82,8 @@ public class Contacto extends javax.swing.JPanel {
         lblImagen = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setMaximumSize(new java.awt.Dimension(100, 50));
-        setMinimumSize(new java.awt.Dimension(100, 50));
-        setPreferredSize(new java.awt.Dimension(200, 60));
+        setMinimumSize(new java.awt.Dimension(100, 150));
+        setPreferredSize(new java.awt.Dimension(200, 150));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
