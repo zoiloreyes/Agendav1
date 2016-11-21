@@ -39,6 +39,7 @@ private URLConnection conn;
 private Image imagen;
 private JLabel imglabel;
 private BufferedImage bimg;
+private Image resized;
     public BufferedImage getImagen(String url){
             URL path;
         try {
@@ -54,11 +55,26 @@ private BufferedImage bimg;
        return bimg;
     }
     public Image getResizedImg(String url, int w, int h){
-       ImageIcon imgic = new ImageIcon(getImagen(url));
-       Image image = imgic.getImage();
-       Image resized = image.getScaledInstance(w,h,java.awt.Image.SCALE_SMOOTH);
-       
-       return resized;
+       try{
+            ImageIcon imgic = new ImageIcon(getImagen(url));
+            Image image = imgic.getImage();
+            Image resized = image.getScaledInstance(w,h,java.awt.Image.SCALE_SMOOTH);
+
+            return resized;
+       }catch(Exception e){
+           ImageIcon imgic = new ImageIcon(getImagen("https://pbs.twimg.com/profile_images/600060188872155136/st4Sp6Aw.jpg"));
+           Image image = imgic.getImage();
+           Image resized = image.getScaledInstance(w,h,java.awt.Image.SCALE_SMOOTH);
+           
+           return resized;
+       }
+ 
+    }
+    
+    public JLabel getResizedLbl(String url, int w, int h){
+        Image img = getResizedImg(url,w,h);
+        imglabel = new JLabel(new ImageIcon(img));
+        return imglabel;
     }
     
     public static BufferedImage imageToBufferedImage(Image im) {

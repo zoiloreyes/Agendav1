@@ -41,10 +41,11 @@ public class main {
                    String imagen = res.getString(7);
                
                    
-                   Contacto c = new Contacto(nombre, apellido, lugar, telefono, correo, imagen, id_contacto);
-                   ls.add(c);
+                 
+                   
                }
-               
+               jf.setLayout(new BorderLayout());
+               jf.add(ls);
                jf.setVisible(true);
                
            } catch (SQLException ex) {

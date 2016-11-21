@@ -5,31 +5,72 @@
  */
 package Agenda;
 
+import java.awt.BorderLayout;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 
 /**
  *
  * @author zoiloreyes
  */
 public class Agenda extends javax.swing.JFrame {
-
+    ContactoCRUD cc;
+    ResultSet res;
+    ListaContacto ls;
+    
     /**
      * Creates new form Agenda
      */
     public Agenda() {
-        Imagen img = new Imagen();
-        Contacto c = new Contacto("John","Salchichon", "Casa del diablo","8095456424","lolidk","http://i.imgur.com/ghLpbz9.png",3);
-        
-        JLabel lbl = new JLabel();
-        lbl = img.getRoundImage("http://i.imgur.com/ghLpbz9.png",50,50,6);
-        
-        this.add(lbl);
-        this.add(c);
+        prepareList();
         initComponents();
-        
+        prepareAgenda();
         
     }
-
+    private void prepareAgenda(){
+        setLayout(new BorderLayout());
+        JScrollPane sp = new JScrollPane(ls);
+        add(sp, BorderLayout.CENTER);
+        add(new SearchBar(), BorderLayout.NORTH);
+        setVisible(true);
+    }
+    
+    public void updateFrame(){
+        prepareList();
+        getContentPane().removeAll();
+        prepareAgenda();
+        revalidate();
+    }
+    private void prepareList(){
+        try{
+               cc = new ContactoCRUD();
+               res = cc.getContactoFull();
+               ls = new ListaContacto();
+               Contacto nuevo = new Contacto("Nuevo","Contacto",null,null,null,"http://www.accurate-cutting.co.uk/wp-content/uploads/2014/06/plus-sign-150x150.jpg", -1,this);
+               ls.addContacto(nuevo);
+               while (res.next()){
+                   int id_contacto = res.getInt(1);
+                   String nombre = res.getString(2);
+                   String apellido = res.getString(3);
+                   String lugar = res.getString(4);
+                   String telefono = res.getString(5);
+                   String correo = res.getString(6);
+                   String imagen = res.getString(7);
+               
+                   
+                   Contacto c = new Contacto(nombre, apellido, lugar, telefono, correo, imagen, id_contacto,this);
+                   ls.addContacto(c);
+               }
+               
+               
+           } catch (SQLException ex) {
+               Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+           }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,6 +81,8 @@ public class Agenda extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setFocusable(false);
+        setPreferredSize(new java.awt.Dimension(400, 500));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

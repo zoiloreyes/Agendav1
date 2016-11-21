@@ -6,21 +6,29 @@
 
 package Agenda;
 
+import java.awt.GridLayout;
+
 /**
  *
  * @author zoiloreyes
  */
 public class ListaContacto extends javax.swing.JPanel {
 private int counter;
+private GridLayout gl;
     /** Creates new form ListaContacto */
     public ListaContacto() {
-        counter = 0;
+        counter = 1;
         initComponents();
         
     }
     
     public void addContacto(Contacto c){
-        
+        gl = new GridLayout();
+        gl.setRows(counter);
+        setLayout(gl);
+        add(c);
+        revalidate();
+        counter++;
     }
 
     /** This method is called from within the constructor to
@@ -32,7 +40,9 @@ private int counter;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setLayout(new java.awt.GridBagLayout());
+        setMinimumSize(new java.awt.Dimension(200, 60));
+        setPreferredSize(new java.awt.Dimension(0, 600));
+        setLayout(new java.awt.GridLayout(1, 0));
     }// </editor-fold>//GEN-END:initComponents
 
 

@@ -17,7 +17,7 @@ public class Driver {
             System.out.println(e.getMessage());
         }
     }
-    
+   
     public static Connection getConnection() throws Exception{
         try{
             String driver = "com.mysql.jdbc.Driver";
